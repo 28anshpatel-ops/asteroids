@@ -74,7 +74,7 @@ def log_state() -> None:
                         round(sprite.velocity.y, 2),
                     ]
                 if hasattr(sprite, "radius"):
-                    sprite_info["radius"] = sprite.radius
+                    sprite_info["rad"] = sprite.radius
                 if hasattr(sprite, "rotation"):
                     sprite_info["rot"] = round(sprite.rotation, 2)
                 sprites_data.append(sprite_info)
@@ -96,7 +96,7 @@ def log_state() -> None:
             if hasattr(value, "radius"):
                 sprite_info["rad"] = value.radius
             if hasattr(value, "rotation"):
-                sprite_info["rot"] = round(sprite.rotation, 2)
+                sprite_info["rot"] = round(value.rotation, 2)  # Fixed from sprite.rotation to value.rotation
             game_state[key] = sprite_info
 
     entry: dict[str, object] = {

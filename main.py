@@ -1,6 +1,8 @@
 import pygame
 from constants import *
 from logger import log_state
+from player import Player
+
 
 def main():
 
@@ -16,19 +18,43 @@ def main():
   clock = pygame.time.Clock()
   dt = 0.0
 
- # Main game loop
- while True:
+  #
+  updatable = pygame.sprite.Group()
+  drawable = pygame.sprite.Group()
+
+ 	 #
+  Player.containers = (updatable, drawable)
+
+  #
+  player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+  # Main game loop
+  while True:
       log_state()
+
       # Handle user events (like closing the window)
       for event in pygame.event.get():
           if event.type == pygame.QUIT:
               return
 
-     # clears screen with black background + refresh display with a cap at 60 FPS & delta time
-      screen.fill("black")
-      pygame.display.flip()
-      dt = clock.tick(60) / 1000
+      #
+      updatable.update(dt)
 
+      #
+      player.update(dt)
+
+      # Clear screen with black background
+      screen.fill("black")
+
+      # Draw all objects in the drawable group
+      for obj in drawable:
+          obj.draw(screen)
+
+      # Refresh display
+      pygame.display.flip()
+
+      # Cap at 60 FPS and update delta time
+      dt = clock.tick(60) / 1000
 
 if __name__ == "__main__":
   main()
